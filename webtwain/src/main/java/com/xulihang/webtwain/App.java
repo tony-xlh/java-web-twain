@@ -1,6 +1,7 @@
 package com.xulihang.webtwain;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,12 +15,30 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-
+    public static HostServices hostServices;
+    private static EmbeddedServer server;
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+    	hostServices=getHostServices();
+    	scene = new Scene(loadFXML("primary"));
         stage.setScene(scene);
+        stage.setTitle("Java Web TWAIN");
+        stage.setOnCloseRequest(event -> {
+			System.out.println("Stopping server and exit.");
+			try {
+				server.stop();
+				System.exit(0);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
         stage.show();
+        server = new EmbeddedServer();
+    	try {
+			server.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     static void setRoot(String fxml) throws IOException {

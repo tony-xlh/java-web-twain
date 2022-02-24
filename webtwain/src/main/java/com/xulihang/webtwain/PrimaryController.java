@@ -100,7 +100,7 @@ public class PrimaryController {
 						    try {
 						    	Stage newWindow = new Stage();
 							    newWindow.setTitle(link);
-							    FXMLLoader loader = new FXMLLoader(getClass().getResource("qrcode.fxml"));
+							    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/xulihang/webtwain/fxml/qrcode.fxml"));
 								newWindow.setScene(new Scene(loader.load()));
 								newWindow.setAlwaysOnTop(true);
 								newWindow.show();
